@@ -1,0 +1,11 @@
+security_id,security_name,asset_class,currency,exchange
+AAPL,Apple Inc,Equity,USD,NYSE
+MSFT,Microsoft Corp,Equity,USD,NYSE
+GS,Goldman Sachs,Equity,USD,NYSE
+JPM,JPMorgan Chase,Equity,USD,NYSE
+T-2026,US Treasury 2026,Fixed Income,USD,OTC
+T-2028,US Treasury 2028,Fixed Income,USD,OTC
+CORP-A,Corp Bond Series A,Fixed Income,USD,OTC
+CORP-B,Corp Bond Series B,Fixed Income,USD,OTC
+SPY,S&P 500 ETF,ETF,USD,OTC
+QQQ,Nasdaq 100 ETF,ETF,USD,OTC
